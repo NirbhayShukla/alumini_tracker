@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:alumini_tracker/login_screen/sign_up_screen.dart';
-import 'package:alumini_tracker/homescreen/homescren.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -136,9 +136,10 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() async {
       if (_formkey.currentState.validate()) {
         try {
-          FirebaseUser user = (await FirebaseAuth.instance
-              .signInWithEmailAndPassword(email: _email, password: _password)).user;
-              Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
+          await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: _email, password: _password);
+          
+             
         } catch (e) {
           print(e.message);
         }

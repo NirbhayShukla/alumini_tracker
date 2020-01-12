@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -261,14 +262,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
         width: double.infinity,
         child: RaisedButton(
-          onPressed: () {
-            setState(() {
-              if (_formkey.currentState.validate())
-                print("Signed up");
-              else
-                _autovalidate = true;
-            });
-          },
+          onPressed: signUp,
           elevation: 5,
           padding: EdgeInsets.all(15),
           child: Text(
@@ -284,6 +278,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           color: Colors.white,
         ));
+  }
+
+  void signUp() {
+    setState(() async{
+      if (_formkey.currentState.validate()) {
+        FirebaseUser user =(await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email,password: _password)).user;
+      } else
+        _autovalidate = true;
+    });
   }
 
   Widget login() {
