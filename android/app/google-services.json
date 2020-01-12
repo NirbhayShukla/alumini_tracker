@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "294876400459",
+    "firebase_url": "https://alumini-tracking.firebaseio.com",
+    "project_id": "alumini-tracking",
+    "storage_bucket": "alumini-tracking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294876400459:android:8232ffb1c6dbb8b84ab6ce",
+        "android_client_info": {
+          "package_name": "com.example.alumini_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294876400459-skvo2d1kfhgeejia8rvr01era9ta3sbf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIB0Bn5YRNvsX1Sr1AMc49r83gMdRxd8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294876400459-skvo2d1kfhgeejia8rvr01era9ta3sbf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

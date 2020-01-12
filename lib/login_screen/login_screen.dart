@@ -1,5 +1,8 @@
-import 'package:alumini_tracker/login_screen/sign_up_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:alumini_tracker/login_screen/sign_up_screen.dart';
+import 'package:alumini_tracker/homescreen/homescren.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -56,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 12, horizontal: 5),
                 prefixIcon: Icon(Icons.email, color: Colors.white),
-                errorStyle: TextStyle(color: Colors.white),
+                errorStyle: TextStyle(color: Colors.white54),
                 hintText: "Enter your email",
                 hintStyle: TextStyle(color: Colors.white38)),
           ),
@@ -111,14 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
         width: double.infinity,
         child: RaisedButton(
-          onPressed: () {
-            setState(() {
-              if (_formkey.currentState.validate())
-                print("Logged in");
-              else
-                _autovalidate = true;
-            });
-          },
+          onPressed: login,
           elevation: 5,
           padding: EdgeInsets.all(15),
           child: Text(
@@ -134,6 +130,21 @@ class _LoginScreenState extends State<LoginScreen> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           color: Colors.white,
         ));
+  }
+
+  Future<void> login() async {
+    setState(() async {
+      if (_formkey.currentState.validate()) {
+        try {
+          FirebaseUser user = (await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: _email, password: _password)).user;
+              Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
+        } catch (e) {
+          print(e.message);
+        }
+      } else
+        _autovalidate = true;
+    });
   }
 
   Widget socialSites() {

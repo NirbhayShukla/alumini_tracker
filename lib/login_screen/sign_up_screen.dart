@@ -39,7 +39,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Container(
             alignment: Alignment.centerLeft,
             decoration: kBoxDecorationStyle,
-            height: 50,
             child: TextFormField(
               onChanged: (String value) {
                 _name = value;
@@ -54,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   border: InputBorder.none,
-                  errorStyle: TextStyle(color: Colors.white),
+                  errorStyle: TextStyle(color: Colors.white54),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                   prefixIcon: Icon(Icons.person, color: Colors.white),
@@ -80,7 +79,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Container(
             alignment: Alignment.centerLeft,
             decoration: kBoxDecorationStyle,
-            height: 50,
             child: TextFormField(
               onChanged: (String value) {
                 _passyear = value;
@@ -95,7 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   border: InputBorder.none,
-                  errorStyle: TextStyle(color: Colors.white),
+                  errorStyle: TextStyle(color: Colors.white54),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                   prefixIcon: Icon(Icons.date_range, color: Colors.white),
@@ -121,7 +119,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Container(
             alignment: Alignment.centerLeft,
             decoration: kBoxDecorationStyle,
-            height: 50,
             child: TextFormField(
               onChanged: (String value) {
                 _studentno = value;
@@ -130,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   border: InputBorder.none,
-                  errorStyle: TextStyle(color: Colors.white),
+                  errorStyle: TextStyle(color: Colors.white54),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                   prefixIcon: Icon(Icons.person_pin, color: Colors.white),
@@ -156,7 +153,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Container(
             alignment: Alignment.centerLeft,
             decoration: kBoxDecorationStyle,
-            height: 50,
             child: TextFormField(
               onChanged: (String value) {
                 _email = value;
@@ -171,7 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   border: InputBorder.none,
-                  errorStyle: TextStyle(color: Colors.white),
+                  errorStyle: TextStyle(color: Colors.white54),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                   prefixIcon: Icon(Icons.email, color: Colors.white),
@@ -197,7 +193,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Container(
             alignment: Alignment.centerLeft,
             decoration: kBoxDecorationStyle,
-            height: 50,
             child: TextFormField(
               onChanged: (String value) {
                 _password = value;
@@ -212,7 +207,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   border: InputBorder.none,
-                  errorStyle: TextStyle(color: Colors.white),
+                  errorStyle: TextStyle(color: Colors.white54),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                   prefixIcon: Icon(Icons.lock, color: Colors.white),
@@ -238,7 +233,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Container(
             alignment: Alignment.centerLeft,
             decoration: kBoxDecorationStyle,
-            height: 50,
             child: TextFormField(
               validator: (String value) {
                 if (value.compareTo(_password) != 0)
@@ -250,7 +244,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   border: InputBorder.none,
-                  errorStyle: TextStyle(color: Colors.white),
+                  errorStyle: TextStyle(color: Colors.white54),
                   contentPadding: EdgeInsets.only(top: 12),
                   prefixIcon: Icon(Icons.lock, color: Colors.white),
                   hintText: "Confirm password",
