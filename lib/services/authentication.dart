@@ -10,16 +10,39 @@ class Authentication {
   }
 
   Stream<User> get user {
-    return _auth.onAuthStateChanged
-        .map(_userfromFirebaseUser);
+    return _auth.onAuthStateChanged.map(_userfromFirebaseUser);
   }
 
-  Future signOut() async{
-    try{
-return await _auth.signOut();
-  }catch(e){
-    print(e.toString());
-    return null;
+
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
-}
+
+  Future signUp(String email, String password) async {
+    try {
+      FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
+              email: email, password: password))
+          .user;
+      return _userfromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future signIn(String email, String password) async {
+    try {
+      FirebaseUser user = (await _auth.signInWithEmailAndPassword(
+              email: email, password: password))
+          .user;
+      return _userfromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

@@ -1,5 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:alumini_tracker/services/authentication.dart';
+import 'package:alumini_tracker/login_screen/loading.dart';
+import 'package:alumini_tracker/services/database.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -7,7 +10,11 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  Authentication auth = Authentication();
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  bool loading = false;
+  DatabaseService db;
+
   String _name = "";
   String _passyear = "";
   String _studentno = "";
@@ -199,7 +206,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 _password = value;
               },
               validator: (String value) {
-                if (value.length <= 8)
+                if (value.length < 8)
                   return "Password must be at least 8 characters";
                 else
                   return null;
@@ -280,13 +287,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ));
   }
 
-  void signUp() {
-    setState(() async{
-      if (_formkey.currentState.validate()) {
-        FirebaseUser user =(await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email,password: _password)).user;
+  void signUp() async {
+    if (_formkey.currentState.validate()) {
+      setState(() {
+        loading = true;
+      });
+      dynamic result = await auth.signUp(_email, _password);
+      if (result != null) {
+        db = await DatabaseService(uid: result.getUid());
+        db.updateData(name: _name, passyear: _passyear, studentno: _studentno);
+        Navigator.pop(context);
       } else
+        setState(() {
+          loading = false;
+        });
+    } else {
+      setState(() {
         _autovalidate = true;
-    });
+      });
+    }
   }
 
   Widget login() {
@@ -312,63 +331,66 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF73AEF5),
-                  Color(0xFF61A4F1),
-                  Color(0xFF478DE0),
-                  Color(0xFF398AE5),
-                ],
-                stops: [0.1, 0.4, 0.7, 0.9],
-              ),
-            ),
-          ),
-          Form(
-            key: _formkey,
-            autovalidate: _autovalidate,
-            child: Container(
-              height: double.infinity,
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Sign Up",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
+    return loading
+        ? Loading()
+        : Scaffold(
+            body: Stack(
+              children: <Widget>[
+                Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFF73AEF5),
+                        Color(0xFF61A4F1),
+                        Color(0xFF478DE0),
+                        Color(0xFF398AE5),
+                      ],
+                      stops: [0.1, 0.4, 0.7, 0.9],
+                    ),
+                  ),
+                ),
+                Form(
+                  key: _formkey,
+                  autovalidate: _autovalidate,
+                  child: Container(
+                    height: double.infinity,
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          nameField(),
+                          passField(),
+                          studentNoField(),
+                          emailField(),
+                          passwordField(),
+                          passwordConfirmField(),
+                          signUpButton(),
+                          login(),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    nameField(),
-                    passField(),
-                    studentNoField(),
-                    emailField(),
-                    passwordField(),
-                    passwordConfirmField(),
-                    signUpButton(),
-                    login(),
-                  ],
-                ),
-              ),
+                  ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
-    );
+          );
   }
 }

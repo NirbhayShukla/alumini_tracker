@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:alumini_tracker/login_screen/sign_up_screen.dart';
-
+import 'package:alumini_tracker/services/authentication.dart';
+import 'package:alumini_tracker/login_screen/loading.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,7 +10,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Authentication auth = Authentication();
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  bool loading =false;
+
   String _email = "";
   String _password = "";
   bool _autovalidate = false;
@@ -133,19 +136,26 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> login() async {
-    setState(() async {
-      if (_formkey.currentState.validate()) {
-        try {
-          await FirebaseAuth.instance
-              .signInWithEmailAndPassword(email: _email, password: _password);
-          
-             
-        } catch (e) {
-          print(e.message);
+    if (_formkey.currentState.validate()) {
+      setState(() {
+        loading =true;
+      });
+      try {
+        dynamic result = await auth.signIn(_email, _password);
+        if (result == null) {
+          setState(() {
+            loading =false;
+          });
+          //Show Dialog Box
         }
-      } else
+      } catch (e) {
+        print(e.message);
+      }
+    } else {
+      setState(() {
         _autovalidate = true;
-    });
+      });
+    }
   }
 
   Widget socialSites() {
@@ -219,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading?Loading(): Scaffold(
       body: Stack(
         children: <Widget>[
           Container(
