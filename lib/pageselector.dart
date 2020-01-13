@@ -14,6 +14,6 @@ class PageSelector extends StatelessWidget {
     if(user == null)
    return LoginScreen();
    else
-   return HomeScreen(user);
+   return HomeScreen();
   }
 }
